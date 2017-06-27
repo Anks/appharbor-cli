@@ -75,7 +75,7 @@ namespace AppHarbor.Commands
 
 					transferUtility.Upload(request);
 
-					Console.CursorTop++;
+                    //Console.CursorTop++;
 					_writer.WriteLine();
 				}
 			}

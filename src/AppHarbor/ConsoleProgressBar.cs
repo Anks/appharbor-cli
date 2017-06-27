@@ -59,60 +59,61 @@ namespace AppHarbor
 
 		private static void Render(double percentage, string message)
 		{
-			Console.CursorLeft = 0;
+            Console.WriteLine("Progress:\t{0}\t{1}", percentage, message ?? "");
+            //Console.CursorLeft = 0;
 
-			using (new ForegroundColor(ConsoleColor.Cyan))
-			{
-				try
-				{
-					Console.CursorVisible = false;
+            //using (new ForegroundColor(ConsoleColor.Cyan))
+            //{
+            //    try
+            //    {
+            //        Console.CursorVisible = false;
 
-					int width = Console.WindowWidth - 1;
-					int newWidth = (int)((width * percentage) / 100d);
-					string progressBar = string.Empty
-						.PadRight(newWidth, ProgressBarCharacter)
-						.PadRight(width - newWidth, ' ');
+            //        int width = Console.WindowWidth - 1;
+            //        int newWidth = (int)((width * percentage) / 100d);
+            //        string progressBar = string.Empty
+            //            .PadRight(newWidth, ProgressBarCharacter)
+            //            .PadRight(width - newWidth, ' ');
 
-					Console.Write(progressBar);
-					message = message ?? string.Empty;
+            //        Console.Write(progressBar);
+            //        message = message ?? string.Empty;
 
-					Console.WriteLine();
+            //        Console.WriteLine();
 
-					OverwriteConsoleMessage(message);
-					Console.CursorTop--;
-				}
-				finally
-				{
-					Console.CursorVisible = true;
-				}
-			}
+            //        OverwriteConsoleMessage(message);
+            //        Console.CursorTop--;
+            //    }
+            //    finally
+            //    {
+            //        Console.CursorVisible = true;
+            //    }
+            //}
 		}
 
-		private static void OverwriteConsoleMessage(string message)
-		{
-			Console.CursorLeft = 0;
-			int maxCharacterWidth = Console.WindowWidth - 1;
-			if (message.Length > maxCharacterWidth)
-			{
-				message = message.Substring(0, maxCharacterWidth - 3) + "...";
-			}
-			message = message + new string(' ', maxCharacterWidth - message.Length);
-			Console.Write(message);
-		}
+        //private static void OverwriteConsoleMessage(string message)
+        //{
+        //    Console.CursorLeft = 0;
+        //    int maxCharacterWidth = Console.WindowWidth - 1;
+        //    if (message.Length > maxCharacterWidth)
+        //    {
+        //        message = message.Substring(0, maxCharacterWidth - 3) + "...";
+        //    }
+        //    message = message + new string(' ', maxCharacterWidth - message.Length);
+        //    Console.Write(message);
+        //}
 
-		private static double WeightedAverage(IList<double> input, int spread = 40)
-		{
-			if (input.Count == 1)
-			{
-				return input.Average();
-			}
+        private static double WeightedAverage(IList<double> input, int spread = 40)
+        {
+            if (input.Count == 1)
+            {
+                return input.Average();
+            }
 
-			var weightdifference = spread / (input.Count() - 1);
-			var averageWeight = 50;
-			var startWeight = averageWeight - spread / 2;
+            var weightdifference = spread / (input.Count() - 1);
+            var averageWeight = 50;
+            var startWeight = averageWeight - spread / 2;
 
-			return input.Select((x, i) => x * (startWeight + (i * weightdifference)))
-				.Sum() / (averageWeight * input.Count());
-		}
+            return input.Select((x, i) => x * (startWeight + (i * weightdifference)))
+                .Sum() / (averageWeight * input.Count());
+        }
 	}
 }
